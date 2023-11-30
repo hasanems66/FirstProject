@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+
+
+{% block main %}
+    <!-- Breadcrumb Start -->
+    <div class="container-fluid mt-6" style="background-color: #0f6674">
+        <div class="row px-lg-4">
+            <div class="col-12 mt-3">
+                <nav class="bg-white rounded p-1 mb-3" style="--bs-breadcrumb-divider:'>' ">
+                    <ol class="breadcrumb ms-3 mt-3">
+                        <li class="breadcrumb-item"><a href="#">صفحه اصلی</a></li>
+                        <li class="breadcrumb-item"><a href="#">سفارش</a></li>
+                        <li class="breadcrumb-item text-danger">جزئیات سفارش</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Cart Start -->
+    <div class="container-fluid" style="background-color: #0f6674">
+        <div class="row px-lg-4">
+            <div class="col-lg-8  mb-5">
+                <table class="table table-responsive table-borderless table-hover  text-center mb-0">
+                    <thead class="table-dark">
+                    <tr class="border-white border-4">
+                        <th>Image</th>
+                        <th>Products</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                    </thead>
+                    <tbody class="align-middle table-info">
+                    {% for item in order.items.all %}
+                        <tr class=" border-white border-4 m-2 table-danger">
+                            <td class="align-middle"><img src="{{ item.book.image.url }}"
+                                                          class="img-fluid"
+                                                          alt="" style="width: 50px;"></td>
+                            <td class="align-middle"> {{ item.book.title }}</td>
+                            <td class="align-middle">{{ item.price }} تومان</td>
+                            <td class="align-middle">{{ item.quantity }}</td>
+                            <td class="align-middle">{{ item.total }} تومان</td>
+
+                        </tr>
+
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-4 ">
+                <form class="mb-3" method="post" action="{% url 'cart:apply_discount' order.id %}">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <button class="btn btn-warning">اعمال کد تخفیف</button>
+
+                        <input type="text" name="discount_code" class="form-control border-0 p-2"
+                               placeholder="کد تخفیف را وارد کنید">
+                    </div>
+                </form>
+
+                <div class="bg-white rounded p-5 mb-4">
+
+                    <div class="pt-2">
+                        <div class="d-flex justify-content-between ">
+                            <h5>قیمت کل :</h5>
+                            <h5>{{ order.total_price }} تومان </h5>
+                        </div>
+                    </div>
+                </div>
+                {% if request.user.addresses.all %}
+                    <form action="{% url 'cart:send_request' order.id %}" method="post">
+                    {% csrf_token %}
+                        <select name="address" class="form-select border-0 mb-3" aria-label="Default select example">
+                            {% for address in request.user.addresses.all %}
+                                <option value="{{ address.id }}">{{ address.address }}</option>
+                            {% endfor %}
+
+                        </select>
+
+                        <a href="{% url 'account:add_address' %}?next={% url 'cart:order_detail' order.id %}"
+                           class="btn btn-warning d-grid rounded font-weight-bold mb-2 py-2">
+                            آدرس دیگری را اضافه کنید</a>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success rounded font-weight-bold mb-o py-2 my-2">پرداخت
+                        </button>
+                        </div>
+                    </form>
+
+                {% else %}
+                    <a href="{% url 'account:add_address' %}?next={% url 'cart:order_detail' order.id %}"
+                       class="btn btn-warning d-grid  font-weight-bold mb-2 py-2">
+                        شما هیچ آدرسی ندارید، یک آدرس اضافه کنید</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <!-- Cart End -->
+{% endblock %}

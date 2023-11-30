@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" >
+
+
+<head>
+    {% include 'includes/head_link.html' %}
+</head>
+<title>{% block title %}{% endblock %}</title>
+
+<body>
+  <main class="main">
+    {% include 'includes/navbar.html' %}
+
+
+    {% block main %}
+
+
+      {% endblock %}
+
+
+
+    <!--Start Footer-->
+   {% include 'includes/footer.html' %}
+    <!--End Footer-->
+  </main>
+</body>
+{% include 'includes/footer_link.html' %}
+
+</html>

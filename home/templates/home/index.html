@@ -1,0 +1,303 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    صفحه اصلی
+{% endblock %}
+
+
+
+
+
+
+
+{% block main %}
+    <!--Carousel Top-->
+    <section class="z-index-1 pb-0 bg-200"
+             style="margin-bottom: -10rem;background-image: url('{% static 'img/gallery/back5.jpg' %}');">
+        <div class="container-fluid">
+            <div id="carousel1" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active" data-bs-interval="5000">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <img src="{% static 'img/gallery/book14.jpg' %}"
+                                     alt="" class="img-fluid w-100 p-3" style="height: 400px;">
+                            </div>
+                            <div class="col-lg-4">
+
+                                <img src="{% static 'img/gallery/book12.jpg' %}"
+                                     alt="" class="img-fluid w-100 p-3" style="height: 400px">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="carousel-item" data-bs-interval="5000">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <img src="{% static 'img/gallery/book15.jpg' %}"
+                                     alt="" class="img-fluid w-100 p-3" style="height: 400px">
+                            </div>
+                            <div class="col-lg-4">
+                                <img src="{% static 'img/gallery/book13.jpg' %}"
+                                     alt="" class="img-fluid w-100 p-3" style="height: 400px">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row mt-4 px-2 px-md-0">
+                    <div class="col-6 position-relative">
+                        <div class="carousel-indicators">
+                            <button data-bs-target="carousel1" data-bs-slide-to="0" class="active"></button>
+                            <button data-bs-target="carousel1" data-bs-slide-to="1"></button>
+                        </div>
+                    </div>
+                    <div class="col-6 position-relative">
+              <span class="carousel-control-prev" data-bs-target="#carousel1" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+              </span>
+                        <span class="carousel-control-next" data-bs-target="#carousel1" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+              </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--End Carousel Top-->
+
+    <!--Start Shope-->
+    <section class="pt-10 bg-200">
+        <div class="container-fluid">
+            <div class="row h-100 justify-content-center">
+                {% for book in books %}
+                    <div class="col-6 col-md-5 col-lg-4 col-xl-2 pt-4 px-md-2 px-lg-3  rounded-3">
+                        <a href="{{ book.get_absolute_url }}" class="text-decoration-none">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body d-flex flex-column justify-content-around mx-auto">
+                                    <img src="{{ book.image.url }}" class="img-fluid card-img-top rounded"
+                                         style="height: 250px" alt="">
+                                    <h5 class="card-title my-2">{{ book.title }}</h5>
+                                    <div class="card-text">
+                                        <div class="d-block">
+                                            {% if book.discount %}
+                                                <div class="d-block align-items-end text-end">
+                                                    <span class="text-muted  text-decoration-line-through">{{ book.price }}</span>
+                                                    <span class="badge rounded-pill bg-danger  fs--1">%{{ book.discount }}</span>
+                                                </div>
+                                                <div class="d-block align-items-end text-end">
+                                                    <p class="text-1000">{{ book.discounted_price }} تومان</p>
+                                                </div>
+                                            {% else %}
+                                                <div class="d-block align-items-end text-end">
+                                                    <p class="text-1000">{{ book.price }} تومان</p>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+
+
+            </div>
+        </div>
+    </section>
+    <!--End Shope-->
+    <div id="back">
+        <!--Carousel-->
+        <section class="py-5 z-index-1 " style="margin-bottom: -10rem;">
+            <div class="container">
+                <div class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" data-bs-interval="3000">
+                            <div class="card py-5 px-5 border-0 shadow-lg">
+                                <div class="card-body">
+                                    <div class="row flex-center">
+                                        <div class="col-lg-6 col-md-5 order-md-1">
+                                            <img src="{% static 'img/illustrations/1.png' %}" alt="" class="img-fluid">
+                                        </div>
+                                        <div class="col-md-7 col-lg-6 mt-5 text-center text-md-start">
+                                            <h1>
+                                                مدرک فوریت های پزشکی به چه دردی میخوره؟<br>
+                                            </h1>
+                                            <p class="mt-3 mb-4">
+
+                                                افراد علاقه مند به این دوره ها می توانند با گذراندن دوره های آموزشی و
+                                                کسب توانایی های لازم و اخذ مدرک این دوره برای ورود به شغل در مراکز فوریت
+                                                های پزشکی اقدام نمایند.برای پاسخ به پرسش مدرک فوریت های پزشکی به چه دردی
+                                                میخوره ؟باید عرض شود که افراد بعد از گذراندن این دوره می توانند در مراکز
+                                                فوریت های پزشکی اورژانس مشغول کار شوند .همچنین می توانند در بعد از کسب
+                                                مهارت های لازم و ارتقای شغلی به رده های نظارتی و مدیریتی دست پیدا
+                                                نمایند.
+
+                                            </p>
+                                            <a href="#" class="btn btn-danger btn-lg hover-top btn-glow">شروع کنید</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item" data-bs-interval="3000">
+                            <div class="card py-5 px-5 border-0 shadow-lg">
+                                <div class="card-body">
+                                    <div class="row flex-center">
+                                        <div class="col-lg-6 col-md-5 order-md-1">
+                                            <img src="{% static 'img/illustrations/2.png' %}" alt="" class="img-fluid">
+                                        </div>
+                                        <div class="col-md-7 col-lg-6 mt-5 text-center text-md-start">
+                                            <h1>
+                                                چرا پیراپزشکی را به عنوان شغل انتخاب می کنیم؟<br>
+                                            </h1>
+                                            <p class="mt-3 mb-4">صنعت پیراپزشکی ستون فقرات صنعت پزشکی و مراقبت های
+                                                بهداشتی است. همواره تقاضا برای پیراپزشکی واجد شرایط ماهر وجود دارد. این
+                                                یک گزینه شغلی بسیار هوشمندانه و سودآور است.
+                                                اگرچه حقوق این حرفه چالش برانگیز می باشد، زیرا پیراپزشکان برای شیفت های
+                                                طولانی مدت باید فعالیت کنند. بنابراین شما به عنوان یک پیراپزشک باید از
+                                                نظر جسمانی قوی باشید. حتی بتوانید خودتان را برای شیفت های طولانی مدت
+                                                آماده کنید. شما با موقعیت های بحرانی و سخت روبرو می شوید بنابراین؛ شما
+                                                همچنین باید از نظر ذهنی آماده باشید.دوره های پیراپزشکی چیست و پیراپزشکان
+                                                چه وظایفی دارند؟</p>
+                                            <a href="#" class="btn btn-danger btn-lg hover-top btn-glow">شروع کنید</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <!--Carousel-->
+
+        <!--Start Courses-->
+        <section class="py-5 pt-9 ">
+            <div class="container-fluid">
+                <div class="row justify-content-center py-5">
+                    <div class="col-md-8 col-lg-5 text-center mb-3">
+                        <h2 class="py-3">دوره های ما</h2>
+                        <p class="text-secondary">در این بخش با دوره های محبوبی آشنا می شوید که می تواند آموزش خیلی خوبی
+                            باشد برای ما که در رشته های پیراپزشکی مشغول به خدمت هستیم این دوره ها توسط افراد خبره تهیه
+                            شده و به صورت رایگان منتشر می شود</p>
+                    </div>
+                    <div class="col-lg-8 ">
+                        <form action="{% url 'course:search_courses' %}" method="get">
+                            <div class="input-group justify-content-center">
+
+                                <input type="search" name="q" class="form-control border-0"
+                                       placeholder="type to course search ..."
+                                       autocomplete="on">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+                <div class="row h-100 justify-content-center">
+                    {% for course in courses %}
+                        <div class="col-md-6 col-lg-3 pt-4 px-md-2 px-lg-3">
+                            <div class="card h-100">
+                                <div class="card-body d-flex flex-column justify-content-around mx-auto">
+                                    <img src="{{ course.image.url }}" class="img-fluid card-img-top"
+                                         style="height: 300px;"
+                                         alt="">
+                                    <p class="card-text text-danger d-flex">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center text-danger">
+                                        <span class="fs--1 fw-medium"><i
+                                                class="bi-person-fill fs--1 me-1 mt-0"></i>{{ course.author.fullname }}</span>
+                                        </div>
+
+                                        <div class="d-flex align-items-center text-danger">
+                                        <span class="fs--1 fw-medium"><i
+                                                class="bi-calendar-fill fs--1 me-2"></i>{{ course.pub_date }}</span>
+                                        </div>
+                                    </div>
+                                    </p>
+                                    <h5>
+                                        <p class="card-title">{{ course.title | truncatechars:32 }}</p>
+                                    </h5>
+
+                                    <p class="card-text">{{ course.body |safe | truncatewords:20 }}</p>
+                                    <a href="{{ course.get_absolute_url }}" class="card-link btn btn-danger rounded">مشاهده
+                                        جزئیات ویدئو</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="d-grid ">
+                        <a href="{% url 'course:course_list' %}"
+                           class="btn btn-outline-secondary shadow-sm border-0 p-3 my-4">لیست کل دوره ها</a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <!--End Courses-->
+
+        <!--start blog-->
+        <section class=" py-5">
+            <div class="container">
+                <div class="row justify-content-center py-5">
+                    <div class="col-md-8 col-lg-5 text-center mb-3">
+                        <h2 class="py-3">مقالات اخیر</h2>
+                        <p class="text-secondary">نوشتن مقاله علمی یکی از مهمترین فعالیت‌ها در زندگی علمی پژوهشگران است.
+                            از
+                            آنجایی که شروع هر کاری سخت است، خواندن راهنما و آموزشی که حرفه‌ای‌های کار آماده می‌کنند،
+                            راهگشا
+                            خواهد بود.</p>
+                    </div>
+                    <div class="col-lg-8 ">
+                        <form action="{% url 'blog:search_blog' %}" method="get">
+                            <div class="input-group justify-content-center">
+
+                                <input type="search" name="q" class="form-control border-0"
+                                       placeholder="type to article search ..."
+                                       autocomplete="on">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row h-100 justify-content-center">
+                    {% for article in articles %}
+                        <div class="col-md-4 col-sm-6 mb-3 pt-4 px-md-2 px-lg-3">
+                            <div class="card h-100">
+                                <div class="card-body d-flex flex-column justify-content-around mx-auto">
+                                    <img src="{{ article.image.url }}" class="img-fluid card-img-top"
+                                         style="height: 300px;"
+                                         alt="">
+                                    <div class="d-flex justify-content-between">
+                                        <h5 class="card-title my-3">{{ article.title | truncatechars:23 }}</h5>
+                                        <p class="fw-medium my-3">views {{ article.views }}</p>
+
+                                    </div>
+                                    <p class="card-text">{{ article.body|safe | truncatewords:15 }}</p>
+
+                                    <a href="{{ article.get_absolute_url }}" class="card-link btn btn-danger rounded">مشاهده
+                                        جزئیات مقاله</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+
+                    <div class="d-grid hasan">
+                        <a href="{% url 'blog:article_list' %}"
+                           class="btn btn-outline-secondary shadow-sm border-0 p-3 my-4">لیست کل مقالات</a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <!--end blog-->
+    </div>
+{#    <script>#}
+{#        function book() {#}
+{#            alert('این بخش به علت فعال نبودن درگاه پرداخت اجازه دسترسی به جزئیات محصول و ادامه روند خرید را ندارید و قیمت کتاب ها واقعی نیستن و به محض فعال شدن درگاه پرداخت دسترسی به سایر مراحل امکان پذیر خواهد شد.')#}
+{#        }#}
+{#    </script>#}
+{% endblock %}

@@ -1,0 +1,267 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    {{ book.title }}
+{% endblock %}
+
+
+
+
+
+{% block main %}
+
+    <!-- Breadcrumb Start -->
+    <div class="container-fluid mt-6" style="background-color: #0f6674">
+        <div class="row ">
+            <div class="col-12 mt-3">
+                <nav class="bg-white rounded p-2" style="--bs-breadcrumb-divider:'>' ">
+                    <ol class="breadcrumb ms-3 mt-3">
+                        <li class="breadcrumb-item"><a href="#">صفحه اصلی</a></li>
+                        <li class="breadcrumb-item"><a href="#">کتاب</a></li>
+                        <li class="breadcrumb-item">جزئیات کتاب</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Shop Details Start -->
+    <div class="container-fluid" style="background-color: #0f6674">
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8 my-5 px-md-2 px-lg-3">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column justify-content-around ">
+                        <div class="card-header bg-white text-center">
+                            <h4>{{ book.title }}</h4>
+
+                        </div>
+
+                        <div class="card-text my-3">
+                            <h5>تولید کننده:</h5>
+                            <a href="#" class="text-decoration-none ms-5">{{ book.publisher }}</a>
+                        </div>
+                        <h5 class="card-title">مشخصات :</h5>
+                        <div class="card-text">
+                            <div class="row d-flex justify-content-between py-5">
+                                <div class="col-md-8 col-lg-4 align-self-">
+                                    <div class="d-flex justify-content-between ">
+                                        <h5>نویسنده :</h5>
+                                        <p>{{ book.author }}</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <h5>موضوع:</h5>
+                                        <p>{{ book.subject }}</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <h5>رشته :</h5>
+                                        <p>{{ book.category.first }}</p>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between">
+                                        <h5>سال چاپ :</h5>
+                                        <p>{{ book.print_year }}</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <h5>مترجم :</h5>
+                                        <p>{{ book.translator }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-8 align-self-center">
+                                    <div class="d-block p-3 justify-content-end rounded-3 vh-50 disabled">
+                                        <div class="bg-warning rounded-3 ms-7 py-4 px-2 mb-3">
+
+                                            <div class="d-flex justify-content-between">
+                                                <p class="mb-2"><i class="bi bi-shop-window me-2 text-primary fs-1"></i>فروشنده:
+                                                    <span class="text-900">کتابسرا</span>
+                                                </p>
+
+                                                <div class="d-block">
+                                                    {% if book.discount %}
+                                                        <p class="text-decoration-line-through">{{ book.price }}
+                                                            تومان<span
+                                                                    class="badge bg-danger rounded-pill fs--1 ms-2">%{{ book.discount }}</span>
+                                                        </p>
+                                                        <h5>{{ book.discounted_price }} تومان</h5>
+                                                    {% else %}
+                                                        <h5> {{ book.price }} تومان</h5>
+                                                    {% endif %}
+                                                </div>
+
+                                            </div>
+                                            <p class="mb-4 me-6"><i class="bi bi-truck me-2 text-primary fs-1"></i>آماده
+                                                ارسال</p>
+                                            <div class="d-flex justify-content-center">
+                                                <button class="btn btn-outline-success rounded-3 h-75 shadow-sm w-75 disabled"
+                                                        style="color: green;"><span
+                                                        class="bi bi-cart-dash-fill me-2"></span>افزودن به سبد خرید
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-between my-3">
+                                <a href="#Information" class="text-decoration-none"><span
+                                        class="bi bi-plus-lg fs-1 me-2 fw-bold"></span>توضیحات بیشتر</a>
+                                <div class="d-flex">
+                                    <a href="#"><i class="bi bi-share-fill me-4 fs-1"></i></a>
+                                    <a href="#"><i class="bi bi-bookmark-fill fs-1"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-4 my-5">
+                <div class="card  mb-3">
+                    <div class="bg-white p-5">
+                        <img src="{{ book.image.url }}"
+                             class="img-fluid card-img" alt="{{ book.title }}" style="height: 400px;">
+                    </div>
+                </div>
+                <div class="card bg-white p-5">
+                    <form action="{% url 'cart:cart_add' book.id %}" method="post">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-between">
+                            <p><i class="bi bi-shop-window me-2 text-primary mr-3 fs-1"></i>فروشنده: <span
+                                    class="text-900">کتابسرا</span></p>
+                            <div class="d-block">
+                                {% if book.discount %}
+                                    <p class="text-decoration-line-through">{{ book.price }} تومان<span
+                                            class="badge bg-danger rounded-pill fs--1 ms-2">%{{ book.discount }}</span>
+                                    </p>
+                                    <h5>{{ book.discounted_price }} تومان</h5>
+                                {% else %}
+                                    <h5> {{ book.price }} تومان</h5>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                        <p class="mb-0"><i class="bi bi-truck me-2 text-primary mr-3 fs-1"></i>آماده ارسال</p>
+
+                        <div class="d-flex justify-content-between mb-3 pt-2">
+                            <div class="input-group  quantity" data-bs-toggle="quantity"
+                                 style="width: 115px;">
+                                <div class="input-group-btn">
+                                    <button  type="button" class="btn btn-sm btn-success btn-plus"
+                                            data-quantity="plus" data-field="quantity">
+                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+
+                                <input type="text"
+                                       class="form-control form-control-sm bg-light border-0 text-center text-dark"
+                                       value="1" min="1" max="100" name="quantity">
+
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-sm btn-danger btn-minus"
+                                            data-quantity="minus" data-field="quantity">
+                                        <i class="fa fa-minus" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button class="btn btn-sm rounded-3 fs--2 text-white shadow-sm"
+                                    style="background-color: darkgreen;"><span
+                                    class="bi bi-cart-dash-fill me-2"></span>افزودن به سبد خرید
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card mb-5">
+                    <div class="card-body">
+                        <div class="card-text">
+                            <div class="bg-white p-5">
+                                <div class="nav nav-tabs mb-4">
+
+                                    <a class="nav-item nav-link text-dark active" id="Information" data-bs-toggle="tab"
+                                       href="#tab-pane-2">Information</a>
+
+                                </div>
+                                <div class="card-text">
+                                    <div class="tab-content">
+
+                                        <div class="tab-pane fade show active" id="tab-pane-2">
+                                            <h4 class="mb-3">اطلاعات محصول</h4>
+                                            <p>{{ book.title }}</p>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="d-flex justify-content-between ">
+                                                        <h5>نویسنده :</h5>
+                                                        <p>{{ book.author }}</p>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between">
+                                                        <h5>موضوع:</h5>
+                                                        <p>{{ book.subject }}</p>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between">
+                                                        <h5>رشته :</h5>
+                                                        <p>{{ book.category.first }}</p>
+                                                    </div>
+
+                                                    <div class="d-flex justify-content-between">
+                                                        <h5>سال چاپ :</h5>
+                                                        <p>{{ book.print_year }}</p>
+                                                    </div>
+
+                                                    <div class="d-flex justify-content-between">
+                                                        <h5>مترجم :</h5>
+                                                        <p>{{ book.translator }}</p>
+                                                    </div>
+
+                                                </div>
+                                                {% for info in book.informations.all %}
+                                                    <div class="col-md-6">
+                                                        <div class="d-flex justify-content-between ">
+                                                            <h5>نوع جلد :</h5>
+                                                            <p>{{ info.book_cover_type }}</p>
+                                                        </div>
+                                                        <div class="d-flex justify-content-between">
+                                                            <h5>قطع:</h5>
+                                                            <p>وزیری ( 24×17.5 )~</p>
+                                                        </div>
+                                                        <div class="d-flex justify-content-between">
+                                                            <h5>تعداد صفحات :</h5>
+                                                            <p>{{ info.number_of_pages }}</p>
+                                                        </div>
+                                                        <div class="d-flex justify-content-between">
+                                                            <h5>وزن :</h5>
+                                                            <p>{{ info.weight }} گرم</p>
+                                                        </div>
+                                                        <div class="d-flex justify-content-between">
+                                                            <h5>کد بین المللی(شابک یا ...) :</h5>
+                                                            <p>{{ info.international_code }}</p>
+                                                        </div>
+
+                                                    </div>
+                                                {% endfor %}
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- End Shop Details Start -->
+    </div>
+
+
+
+{% endblock %}

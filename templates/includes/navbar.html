@@ -1,0 +1,76 @@
+{% load static %}
+
+
+<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3 shadow-sm"
+     data-navbar-on-scrol="data-navbar-on-scrol" style="background-color: #1b3b76">
+    <div class="container">
+        <a href="" class="navbar-brand">
+            <img src="{% static 'img/icons/logo4.jpg' %}" width="33" class="rounded-pill" alt="">
+            <span class="ms-2 fs-1 fw-medium">E.M.S</span>
+        </a>
+        <button class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbarMenu">
+            <ul class="navbar-nav mx-auto border-bottom border-lg-0 mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a href="{% url 'home:main' %}" class="nav-link  {% if request.resolver_match.url_name == 'main' %} active {% endif %}">خانه</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">درباره ما</a>
+                </li>
+                <li class="nav-item ">
+                    <a href="{% url 'course:course_list' %}" class="nav-link  {% if request.resolver_match.url_name == 'course_list' %} active {% endif %}">دوره ها</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'blog:article_list' %}" class="nav-link {% if request.resolver_match.url_name == 'article_list' %} active {% endif %}">مقالات</a>
+                </li>
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">فروشگاه</a>
+                    <div class="dropdown-menu bg-light rounded-0 m-0">
+                        {% for cat in category_book %}
+                            <a href="{% url 'product:book_categories' cat.title %}" class="dropdown-item">{{ cat.title }}</a>
+                        {% endfor %}
+
+                    </div>
+                </div>
+                <li class="nav-item">
+                    <a href="{% url 'account:contact_us' %}" class="nav-link {% if request.resolver_match.url_name == 'contact_us' %} active {% endif %}">تماس با ما</a>
+                </li>
+            </ul>
+
+            {% if request.user.is_authenticated %}
+
+                <div class="dropdown" id="profile">
+                    {% if user.image %}
+                    <img src="{{ user.image.url }}" class="img-fluid dropdown-toggle mt-2 mt-lg-0"
+                         style="width: 30px; height: 40px; border-radius: 100%" data-bs-toggle="dropdown">
+                    {% else %}
+                        <img src="{% static 'img/gallery/avatar.png' %}" class="img-fluid dropdown-toggle mt-2 mt-lg-0"
+                         style="width: 30px; height: 40px; border-radius: 100%" data-bs-toggle="dropdown">
+                    {% endif %}
+                        <div class="dropdown-menu bg-light rounded-3 ml-5">
+                            {% if user.fullname %}
+                            <a href="{% url 'account:user_edit' %}" class="dropdown-item nav-link">{{ user.fullname }}</a>
+                                {% else %}
+                                <a href="{% url 'account:user_edit' %}" class="dropdown-item nav-link">{{ user.phone }}</a>
+                                {% endif %}
+                            <a href="{% url 'account:user_logout' %}" class="dropdown-item nav-link">
+                                <span class="badge bg-danger">logout</span>
+                            </a>
+                        </div>
+                </div>
+
+
+
+            {% else %}
+                <form action="" class="d-flex py-3 py-lg-0">
+
+                    <a href="{% url 'account:otp_login' %}" class="btn btn-outline-danger btn-sm order-0 rounded-pill">ورود/ثبت نام</a>
+                </form>
+            {% endif %}
+
+
+        </div>
+    </div>
+</nav>

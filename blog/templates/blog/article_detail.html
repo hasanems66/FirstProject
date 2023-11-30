@@ -1,0 +1,258 @@
+{% extends 'base.html' %}
+{% load social_share %}
+{% load static %}
+{% block title %}
+    {{ article.title }}
+{% endblock %}
+
+
+
+
+
+
+{% block main %}
+    <section style="background-image: url('{% static 'img/gallery/heading-bg.jpg' %}');">
+        <div class="container">
+            <div class="row justify-content-center ">
+                <div class="col-md-8 col-lg-5 text-center text-white">
+                    <h1 class="mb-2 text-primary">جزئیات مقاله</h1>
+                    <nav style="--bs-breadcrumb-divider: '<' " class="">
+                        <ol class="breadcrumb d-flex flex-center">
+                            <li class="breadcrumb-item">صفحه اصلی</li>
+                            <li class="breadcrumb-item">مقاله</li>
+                            <li class="breadcrumb-item text-danger active">جزئیات مقاله</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="">
+        <div class="container">
+            <div class="row justify-content-start">
+                <div class="col-lg-8">
+                    <div class="row justify-content-start">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body d-flex flex-column justify-content-around">
+                                    <img src="{{ article.image.url }}" class="card-img-top img-fluid"
+                                         style="width: 100%; height: 75%;" alt="">
+                                </div>
+                                <div class="p-2 mx-2">
+                                    <h4 class="card-title">{{ article.title }}</h4>
+                                    <p class="text-muted">{{ article.category.first }}</p>
+                                    <p class="card-subtitle">
+                                    <nav style="--bs-breadcrumb-divider:'|' ">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item">{{ article.author.fullname }}</li>
+                                            <li class="breadcrumb-item">{{ article.created_at }}</li>
+                                            <li class="breadcrumb-item">
+                                                Comments {{ article.article_comments.all.count }}</li>
+                                        </ol>
+                                    </nav>
+                                    </p>
+                                    <p class="card-text">{{ article.body|safe }}</p>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center text-danger">
+                                            {% if is_liked %}
+
+                                                <span class="fs-1 fw-medium me-2"><a
+                                                        onclick="bloglike('{{ article.slug }}', '{{ article.id }}')">
+                                                    <i id="bloglike"
+                                                       class="bi bi-heart-fill fs-1 me-1 mt-0"></i></a><span id="count1">{{ article.article_likes.all.count }}</span>
+                                                </span>
+
+                                            {% else %}
+
+                                                <span class="fs-1 fw-medium me-2"><a
+                                                        onclick="bloglike('{{ article.slug }}', '{{ article.id }}')">
+                                                    <i id="bloglike" class="bi bi-heart fs-1 me-1 mt-0"></i></a><span
+                                                        id="count1">{{ article.article_likes.all.count }}</span>
+                                                </span>
+
+                                            {% endif %}
+
+
+                                            <span class="fs-1 fw-medium">
+                                                <i id="like" class="bi-chat-left-fill fs-1 me-1 mt-0"></i>{{ article.article_comments.all.count }}</span>
+
+                                        </div>
+
+                                        <div class="d-flex align-items-center text-danger">
+                                            <a class="text-decoration-none">{% post_to_whatsapp article.get_absolute_url "whatsapp" %},</a>
+                                            <a class="text-decoration-none">{% post_to_telegram "{{ article.title }}" article.get_absolute_url %}</a>
+                                            <span class="ms-2"><i class="bi bi-share-fill fs-1 fw-medium"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="text-start">
+                            <h2 class="pt-5 mt-5">Comments</h2>
+                        </div>
+                        <hr class="opacity-25">
+
+                        <div class="col-lg-12 ">
+                            <ul class="list-unstyled">
+                                {% for comment in article.article_comments.all %}
+                                    {% if comment.parent == None %}
+                                        <li>
+                                            <div class="card mb-2">
+                                                <div class="card-body d-inline-flex">
+                                                    {% if comment.user.image %}
+                                                        <img src="{{ comment.user.image.url }}"
+                                                             class="img-fluid rounded"
+                                                             style="width: 60px; height: 70px;" alt="">
+                                                    {% else %}
+                                                        <img src="{% static 'img/gallery/avatar3.jpg' %}"
+                                                             class="img-fluid rounded"
+                                                             style="width: 60px; height: 70px;" alt="">
+                                                    {% endif %}
+                                                    <div class="d-flex flex-column justify-content-around mx-2 px-2">
+                                                        <div class="card-title">
+                                                            <h5>{{ comment.user.fullname }}</h5>
+                                                            <span class="fs--1 text-900">{{ comment.created_at }}</span>
+                                                        </div>
+                                                        <p class="card-text d-block">{{ comment.body }}
+                                                            <button onclick="set_value({{ comment.id }})"
+                                                                    class="badge bg-secondary border-0 text-danger">
+                                                                reply
+                                                            </button>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        {% for reply in comment.replies.all %}
+                                            <ul class="reply">
+                                                <li class="list-unstyled">
+                                                    <div class="card mb-2">
+                                                        <div class="card-body d-inline-flex">
+                                                            {% if reply.user.image %}
+                                                                <img src="{{ reply.user.image.url }}"
+                                                                     class="img-fluid rounded"
+                                                                     style="width: 60px; height: 70px;" alt="">
+                                                            {% else %}
+                                                                <img src="{% static 'img/gallery/avatar3.jpg' %}"
+                                                                     class="img-fluid rounded"
+                                                                     style="width: 60px; height: 70px;" alt="">
+                                                            {% endif %}
+                                                            <div class="d-flex flex-column justify-content-around mx-2 px-2">
+                                                                <div class="card-title">
+                                                                    <h5>{{ reply.user.fullname }}</h5>
+                                                                    <span class="fs--1 text-900">{{ reply.created_at }}</span>
+                                                                </div>
+                                                                <p class="card-text d-block">{{ reply.body }}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+
+                            </ul>
+                        </div>
+
+                        {% if request.user.is_authenticated %}
+                            <div class="col-lg-12">
+                                <h3 class="mt-5">Your Comments</h3>
+                                <hr class="opacity-25">
+                                <form action="" method="post">
+                                    {% csrf_token %}
+                                    <div class="row">
+
+                                        <div class="col-12 mb-2">
+                                            <input class="form-control" type="hidden" id="parent_id" name="parent_id"
+                                                   value="">
+                                            <textarea name="body" id="body" cols="30" rows="10" class="form-control"
+                                                      placeholder="type your comment">
+
+                                        </textarea>
+                                        </div>
+                                        <div class="col-12 py-3">
+                                            <button type="submit"
+                                                    class="btn btn-danger rounded shadow-sm hover-top btn-glow">Submit
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        {% else %}
+                            <p class="alert alert-danger"> for sending comment please loging</p>
+                            <a href="{% url 'account:otp_login' %}"
+                               class="btn btn-outline-success border-0 text-primary">Register/Login</a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="sidebar">
+                        <div class="row">
+                            <div class="col-lg-12 ">
+                                <form action="{% url 'blog:search_blog' %}" method="get">
+                                    <div class="input-group justify-content-center">
+
+                                        <input type="search" name="q" class="form-control border-0"
+                                               placeholder="type to article search ..."
+                                               autocomplete="on">
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <h5 class="fs-2 mb-4 pt-4">مقالات اخیر</h5>
+                                <hr class="opacity-25">
+                                {% for article in recent_articles %}
+                                    <div class="mb-5 d-flex">
+                                        <img src="{{ article.image.url }}" class="img-fluid rounded"
+                                             style="width: 70px; height: 70px;">
+                                        <div class=" ms-2">
+                                            <h5>{{ article.title }}</h5>
+                                            <div class="d-flex justify-content-between">
+                                                <p class="text-danger"><i
+                                                        class="bi bi-calendar-fill me-2 fs--1"></i>{{ article.pub_date }}
+                                                </p>
+                                                <p class="text-danger"><i
+                                                        class="bi bi-person-fill  me-2 ms-2 fs--1"></i>{{ article.author.fullname }}
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="col-lg-12">
+                                <h5 class="fs-2 mb-4 pt-4">Category</h5>
+                                <hr class="opacity-25">
+                                <ul class="list-unstyled">
+                                    {% for cat in categorys %}
+                                        <li class="mb-3"><a
+                                                href="{% url 'blog:blog_category' cat.slug %}">{{ cat.title }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <script>
+        function set_value(id) {
+            document.getElementById('parent_id').value = id;
+            window.location.href = '#body';
+        }
+    </script>
+
+{% endblock %}

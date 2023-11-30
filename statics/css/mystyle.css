@@ -1,0 +1,34 @@
+.dropdown:hover .dropdown-menu {
+    display: block;
+
+}
+
+
+.carousel img {
+    border-radius: 7%;
+    /* background-color:goldenrod; */
+
+}
+
+.dropdown img {
+    width: 30px;
+    height: 40px;
+    border-radius: 100%;
+}
+
+.dropdown a:hover {
+    color: red;
+}
+
+
+#back {
+    background-color: #0f6674;
+}
+
+a.nav-link:hover{
+
+     background-color: yellow;
+ }
+
+
+

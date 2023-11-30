@@ -1,0 +1,110 @@
+{% load static %}
+
+
+<footer style="background-image: url('{% static 'img/gallery/back4.jpg' %}');">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-3 pt-5 mb-3 text-white">
+
+                <img src="{% static 'img/icons/logo4.jpg' %}" class="d-inline-block align-middle rounded-pill"
+                     width="30" alt="">
+                <span class="d-inline-block text-primary fs-1 fw-medium ms-2 lh-base">E.M.S</span>
+
+                <p class="py-3">این سایت توسط یکی از همکاران در جهت ارائه مطالب آموزشی و دوره های آموزشی برای شاخه های
+                    پیراپزشکی تهیه شده تا مروری باشد بر مطالب تدریس شده در طول دوران دانشجویی و همچنین بخش فروشگاهی جهت
+                    ارائه ی کتابهای تخصصی هر رشته تهیه شده امیداوارم که مورد رضایت همه کسانی که استفاده می کنند قرار
+                    گیرد</p>
+
+                <div class="mt-5">
+                    <p class="mb-2"><i class="bi bi-geo-alt-fill fs-1 me-2 text-danger"></i>{{ footer.address }}</p>
+                    <p class="mb-2"><i class="bi bi-envelope-at-fill fs-1 me-2 text-danger"></i>{{ footer.email }}</p>
+                    <p class="mb-2"><i class="bi bi-telephone-fill fs-1 me-2 text-danger"></i>{{ footer.phone }}</p>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-4 col-lg-3 pt-5">
+                <h5 class="fs-2 text-primary mb-4">مقالات اخیر</h5>
+                {% for article in recent_articles %}
+                   <a href="{{ article.get_absolute_url }}" class="text-decoration-none">
+                     <div class="d-lg-flex">
+                        <img src="{{ article.image.url }}" class="img-fluid mb-2" style="width: 70px; height: 70px;">
+                        <div class=" ms-2">
+                            <p class="text-white mb-0">{{ article.title }}</p>
+                            <div class="text-white"><span
+                                    class="bi bi-calendar text-danger"></span> {{ article.pub_date }}</div>
+                            <div class="text-white"><span
+                                    class="bi bi-person-fill text-danger"></span> {{ article.author.fullname }}</div>
+{#                            <div class="text-white"><span#}
+{#                                    class="bi bi-chat-left-fill text-danger"></span> {{ article.article_comments.all.count }}#}
+{#                            </div>#}
+                             <div class="text-white"><span
+                                    class="bi bi-eye-fill text-danger"></span> {{ article.views }}
+                            </div>
+                        </div>
+                    </div>
+                   </a>
+                {% endfor %}
+
+            </div>
+            <div class="col-6 col-sm-4 col-lg-3 pt-5">
+                <h5 class="fs-2 text-primary mb-4">دوره های اخیر</h5>
+                {% for course in recent_courses %}
+                   <a href="{{ course.get_absolute_url }}" class="text-decoration-none">
+                     <div class="d-lg-flex ">
+                        <img src="{{ course.image.url }}" class="img-fluid mb-2" style="width: 70px; height: 70px;">
+                        <div class=" ms-2">
+                            <p class="text-white mb-0">{{ course.title }}</p>
+                            <div class="text-white"><span
+                                    class="bi bi-calendar text-danger"></span> {{ course.pub_date }}</div>
+                            <div class="text-white"><span
+                                    class="bi bi-person-fill text-danger"></span> {{ course.author.fullname }}</div>
+{#                            <div class="text-white"><span#}
+{#                                    class="bi bi-chat-left-fill text-danger"></span> {{ course.comments.all.count }}#}
+{#                            </div>#}
+                            <div class="text-white"><span
+                                    class="bi bi-eye-fill text-danger"></span> {{ course.views }}
+                            </div>
+                        </div>
+                    </div>
+                   </a>
+                {% endfor %}
+
+            </div>
+            <div class="col-6 col-sm-4 col-lg-3 pt-5">
+                <h5 class="fs-2 text-primary mb-4">خبرنامه</h5>
+                <p class="text-white">امیدوارم که مطالب این سایت مفید بوده باشه و اگر نظری یا پیشنهادی در مورد سایت یا
+                    مطالب آن دارید می توانید در قسمت تماس با ما برای ما ارسال کنید تا باعث رشد بهتر سایت شود</p>
+{#                <form action="" method="get">#}
+{#                    <div class="input-group">#}
+{#                        <button class="btn btn-primary btn-sm">Sign Up</button>#}
+{#                        <input type="text" class="form-control fs--1" placeholder="your email address">#}
+{##}
+{#                    </div>#}
+{#                </form>#}
+                <h6 class="text-white fs-1 mt-4 mb-3"> ما را دنبال کنید در ..</h6>
+                <div class="d-flex">
+                    <a href="{{ footer.twitter }}" class="text-danger ms-3 fs-1"><i class="bi bi-twitter"></i></a>
+                    <a href="{{ footer.instagram }}" class="text-danger ms-3 fs-1"><i class="bi bi-instagram"></i></a>
+                    <a href="{{ footer.telegram }}" class="text-danger ms-3 fs-1"><i class="bi bi-telegram"></i></a>
+                    <a href="{{ footer.linkedin }}" class="text-danger ms-3 fs-1"><i class="bi bi-linkedin"></i></a>
+                    <a href="{{ footer.whatsapp }}" class="text-danger ms-3 fs-1"><i class="bi bi-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <hr class="border-100">
+        <div class="text-center text-primary">
+            <p class="py-3">طراحی و تنظیم توسط <span class="fs-1 text-danger">حسن سجادی</span> انجام شده است</p>
+
+        </div>
+        <a referrerpolicy='origin' target='_blank'
+           href='https://trustseal.enamad.ir/u?id=376579&code=000102030405060708090A0B0c0D0E0F'><img
+                referrerpolicy='origin'
+                src='https://trustseal.enamad.ir/logo.aspx?id=376579&code=000102030405060708090A0B0c0D0E0F' alt=''
+                style='cursor:pointer' code='000102030405060708090A0B0c0D0E0F'></a>
+
+    </div>
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-warning btn-sm ms-2 rounded back-to-top"><i class="fa fa-angle-double-up"></i></a>
+</footer>
